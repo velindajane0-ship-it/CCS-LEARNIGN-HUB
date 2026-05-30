@@ -1,9 +1,9 @@
 <?php
-$host = getenv("DB_HOST");
-$user = getenv("DB_USER");
-$pass = getenv("DB_PASSWORD");
-$dbname = getenv("DB_NAME");
-$port = getenv("DB_PORT");
+$host = "switchyard.proxy.rlwy.net";
+$user = "root";
+$pass = "EuOnnXtJYtwQClPayUhJAwklCJmWWXDX";
+$dbname = "railway";
+$port = 29873;
 
 $conn = mysqli_connect($host, $user, $pass, $dbname, $port);
 if(!$conn){
