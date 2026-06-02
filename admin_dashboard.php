@@ -176,7 +176,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
     $content = $_POST['announcement_content'];
     $date_posted = date('Y-m-d H:i:s');
 
-    $stmt = $conn->prepare("INSERT INTO announcements (title, content, created_at) VALUES (?, ?, ?)");
+  $stmt = $conn->prepare("INSERT INTO announcements (title, content, created_at, posted_by) VALUES (?, ?, ?, 'admin')");
+$stmt->bind_param("ssss", $title, $content, $date_posted);
     if ($stmt) {
         $stmt->bind_param("sss", $title, $content, $date_posted);
         if ($stmt->execute()) {
