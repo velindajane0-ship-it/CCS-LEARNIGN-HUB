@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
             $msg = "Module deleted successfully!"; 
             $msg_type = "success"; 
         } else { 
-            $msg = "Error deleting module."; 
+            $msg = "Error deleting module."      
             $msg_type = "danger"; 
         }
         $stmt->close();
@@ -259,9 +259,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
         $content_layout = $_POST['content_layout'] ?? 'standard';
         
         // 1. Run the query (it's best practice to wrap the ID in quotes, even if it's an integer)
-$query = "SELECT content_image, video_path FROM quiz_questions WHERE id = '$q_id'";
+// 1. Run the query using a JOIN to safely verify ownership since instructor_id belongs to the modules table
+$query = "SELECT q.content_image, q.video_path 
+          FROM quiz_questions q 
+          JOIN modules m ON q.module_id = m.id 
+          WHERE q.id = '$q_id' AND m.instructor_id = '$instructor_id'";
 $result = $conn->query($query);
-
 // 2. Safely fetch the data ONLY if the query was successful
 $existing_data = $result ? $result->fetch_assoc() : null;
 
