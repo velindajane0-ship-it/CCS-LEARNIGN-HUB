@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
             $msg = "Module deleted successfully!"; 
             $msg_type = "success"; 
         } else { 
-            $msg = "Error deleting module."      
+            $msg = "Error deleting module."; 
             $msg_type = "danger"; 
         }
         $stmt->close();
@@ -258,21 +258,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
         $content_text = $_POST['content_text'] ?? '';
         $content_layout = $_POST['content_layout'] ?? 'standard';
         
-        // 1. Run the query (it's best practice to wrap the ID in quotes, even if it's an integer)
-// 1. Run the query using a JOIN to safely verify ownership since instructor_id belongs to the modules table
-// 1. Run the query using a JOIN to safely verify ownership since instructor_id belongs to the modules table
-$query = "SELECT q.content_image, q.video_path 
-          FROM quiz_questions q 
-          JOIN modules m ON q.module_id = m.id 
-          WHERE q.id = '$q_id' AND m.instructor_id = '$instructor_id'";
-$result = $conn->query($query);
-// 2. Safely fetch the data ONLY if the query was successful
-$existing_data = $result ? $result->fetch_assoc() : null;
+        // 1. Run the query using a JOIN to safely verify ownership since instructor_id belongs to the modules table
+        $query = "SELECT q.content_image, q.video_path 
+                  FROM quiz_questions q 
+                  JOIN modules m ON q.module_id = m.id 
+                  WHERE q.id = '$q_id' AND m.instructor_id = '$instructor_id'";
+        $result = $conn->query($query);
+        
+        // 2. Safely fetch the data ONLY if the query was successful
+        $existing_data = $result ? $result->fetch_assoc() : null;
 
-// 3. Extract the paths safely using the Null Coalescing Operator (??)
-// If the data doesn't exist, it defaults to an empty string instead of crashing.
-$image_path = $existing_data['content_image'] ?? '';
-$video_path = $existing_data['video_path'] ?? '';
+        // 3. Extract the paths safely using the Null Coalescing Operator (??)
+        // If the data doesn't exist, it defaults to an empty string instead of crashing.
+        $image_path = $existing_data['content_image'] ?? '';
+        $video_path = $existing_data['video_path'] ?? '';
+        
         $target_dir_images = "uploads/images/";
         if(isset($_FILES['content_image']) && $_FILES['content_image']['name'] != "") {
             if (!file_exists($target_dir_images)) { mkdir($target_dir_images, 0777, true); }
