@@ -260,6 +260,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
         
         // 1. Run the query (it's best practice to wrap the ID in quotes, even if it's an integer)
 // 1. Run the query using a JOIN to safely verify ownership since instructor_id belongs to the modules table
+// 1. Run the query using a JOIN to safely verify ownership since instructor_id belongs to the modules table
 $query = "SELECT q.content_image, q.video_path 
           FROM quiz_questions q 
           JOIN modules m ON q.module_id = m.id 
