@@ -260,7 +260,7 @@ $announcement_count = $announcements_result ? $announcements_result->num_rows : 
                 
                 // ADDED FUNCTIONALITY TO FORCE COUNT TO 12 IF 0
                 if ($comp_mods == 0) {
-                    $comp_mods = 12;
+                    $comp_mods = 0;
                 }
                 ?>
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex items-center gap-6 hover:shadow-md transition-shadow group">
